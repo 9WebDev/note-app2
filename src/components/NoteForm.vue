@@ -1,0 +1,243 @@
+<template>
+  <div class="note-form">
+    <div class="container pt-5">
+      <div class="card">
+        <h1 class="mt-2" :title="hint" @click.right.prevent>{{ title }}</h1>
+        <form action="" @submit.prevent @keypress.enter.prevent>
+          <input
+            type="text"
+            class="form-control"
+            v-bind:placeholder="placeholderText"
+            v-model="inputValue"
+            v-on:keypress.enter="addNote"
+          />
+          <!-- <div class="error">Empty note! Please enter your note.</div> -->
+          <div class="mt-3">
+            <button class="btn" v-on:click="addNote">Add note</button>
+            <button class="btn mx-3" v-on:click="clearAllNotes">
+              Clear all
+            </button>
+          </div>
+          <div class="line my-4"></div>
+          <div class="hint-box" v-show="notes.length === 0">
+            <!-- <img src="../../public/empty.svg" alt=""> -->
+            <svg
+              version="1.0"
+              xmlns="http://www.w3.org/2000/svg"
+              width="250"
+              height="180"
+              viewBox="0 0 512.000000 374.000000"
+              preserveAspectRatio="xMidYMid meet"
+            >
+              <g
+                fill="#6c7daf"
+                transform="translate(0.000000,374.000000) scale(0.100000,-0.100000)"
+                stroke="none"
+              >
+                <path
+                  d="M4061 3611 c-15 -60 -55 -125 -119 -193 -47 -51 -118 -108 -134 -108
+                                -4 0 -8 25 -8 55 0 46 -4 59 -30 89 -36 40 -104 76 -145 76 -43 0 -110 -36
+                                -140 -76 -37 -48 -42 -99 -17 -157 23 -51 56 -73 137 -91 l50 -12 -48 -28
+                                c-26 -16 -80 -39 -120 -52 -64 -20 -72 -25 -69 -46 1 -12 6 -26 11 -31 13 -13
+                                168 43 231 84 32 21 69 51 81 68 13 17 46 42 74 55 129 60 248 184 300 314 35
+                                86 33 102 -8 102 -31 0 -34 -3 -46 -49z m-393 -165 c58 -30 79 -74 62 -135
+                                -10 -37 -13 -40 -55 -46 -56 -9 -122 20 -148 65 -18 30 -18 31 3 65 39 63 83
+                                79 138 51z"
+                />
+                <path
+                  d="M1815 3599 c-82 -24 -139 -131 -115 -218 22 -82 90 -134 175 -134 59
+                                0 102 20 139 63 75 90 47 229 -57 279 -45 22 -91 25 -142 10z m121 -87 c55
+                                -44 59 -109 10 -158 -26 -26 -42 -34 -71 -34 -49 0 -105 53 -105 100 0 65 43
+                                110 105 110 23 0 49 -8 61 -18z"
+                />
+                <path
+                  d="M2282 3105 c-514 -68 -936 -126 -940 -129 -3 -3 -36 -117 -74 -254
+                                l-68 -247 0 -881 0 -881 -151 -127 c-82 -71 -149 -130 -147 -131 4 -4 1912
+                                -375 1924 -375 5 1 65 75 134 165 l125 163 497 183 c273 100 502 185 508 189
+                                8 5 4 206 -14 762 -14 415 -26 779 -26 810 l0 55 -447 122 c-246 67 -449 123
+                                -451 125 -3 3 59 452 75 544 3 17 1 32 -3 31 -5 -1 -429 -57 -942 -124z m855
+                                3 c-3 -13 -22 -106 -42 -208 -20 -102 -39 -187 -41 -189 -2 -2 -392 -40 -867
+                                -85 l-864 -81 13 40 c7 22 31 99 54 172 l40 132 43 6 c325 49 1619 233 1641
+                                234 24 1 27 -2 23 -21z m-79 -705 l-3 -78 -406 -40 -405 -40 -435 105 c-247
+                                60 -421 106 -404 108 17 2 395 38 840 80 l810 78 3 -68 c2 -37 2 -102 0 -145z
+                                m510 47 c205 -54 376 -101 379 -104 7 -6 65 -1487 59 -1493 -5 -5 -839 -293
+                                -848 -293 -5 0 -8 450 -8 1001 l0 1000 22 -7 c13 -4 191 -51 396 -104z m-1808
+                                -194 l415 -101 3 -606 2 -605 -432 -97 c-238 -53 -439 -97 -445 -97 -10 0 -13
+                                169 -13 810 l0 810 28 -7 c15 -3 214 -52 442 -107z m1300 -701 c0 -371 -1
+                                -675 -2 -675 -2 0 -176 18 -387 40 -211 22 -386 40 -388 40 -3 0 -4 1189 0
+                                1191 9 4 700 77 735 78 l42 1 0 -675z m-400 -725 c206 -22 381 -40 388 -40 9
+                                0 12 -28 12 -105 0 -58 -1 -105 -3 -105 -19 0 -1491 141 -1493 143 -5 4 659
+                                145 691 146 17 0 199 -17 405 -39z m-460 -250 c459 -50 838 -90 843 -90 6 0
+                                -192 -246 -247 -307 -9 -10 -192 22 -821 142 -446 85 -823 158 -839 161 -28 6
+                                -28 6 65 100 89 89 95 93 129 88 19 -2 411 -45 870 -94z"
+                />
+                <path
+                  d="M3295 1768 c-52 -28 -63 -101 -20 -143 48 -49 145 -22 160 44 16 75
+                                -71 137 -140 99z"
+                />
+                <path
+                  d="M3669 1751 c-60 -60 -22 -151 63 -151 51 0 98 43 98 90 0 46 -47 90
+                                -95 90 -27 0 -44 -8 -66 -29z"
+                />
+                <path
+                  d="M3495 1478 c-45 -16 -111 -64 -136 -99 -21 -30 -21 -32 -5 -65 l16
+                                -34 54 44 c110 89 203 92 314 9 l33 -25 -3 59 -3 58 -64 33 c-69 34 -144 42
+                                -206 20z"
+                />
+                <path
+                  d="M4347 2944 c-4 -4 -7 -29 -7 -55 l0 -48 -52 -3 c-52 -3 -53 -4 -56
+                                -37 -4 -41 8 -51 66 -51 l42 0 0 -50 c0 -45 2 -50 27 -56 40 -10 58 7 61 60
+                                l3 46 43 0 c50 0 69 16 64 57 -3 26 -6 28 -55 31 l-52 3 -3 52 c-3 52 -3 52
+                                -38 55 -20 2 -39 0 -43 -4z"
+                />
+                <path
+                  d="M653 2175 c-46 -20 -73 -69 -73 -133 0 -45 4 -57 33 -89 29 -31 41
+                                -37 90 -41 70 -6 115 19 142 77 54 121 -69 240 -192 186z m107 -85 c11 -11 20
+                                -28 20 -38 0 -31 -29 -62 -59 -62 -57 0 -84 50 -50 93 25 32 61 35 89 7z"
+                />
+                <path
+                  d="M587 1334 c-4 -4 -7 -25 -7 -46 0 -38 0 -38 -39 -38 -45 0 -56 -10
+                                -47 -46 5 -20 12 -24 46 -24 39 0 39 0 42 -42 3 -42 4 -43 38 -43 34 0 35 1
+                                38 42 3 42 3 42 45 45 39 3 42 5 42 33 0 28 -3 30 -42 33 -42 3 -42 3 -45 45
+                                -3 39 -5 42 -33 45 -17 2 -34 0 -38 -4z"
+                />
+                <path
+                  d="M4444 1051 c-85 -52 -58 -188 41 -207 43 -8 101 20 120 57 55 104
+                                -60 211 -161 150z m104 -90 c4 -28 -14 -51 -42 -51 -47 0 -63 57 -24 84 19 13
+                                25 14 43 2 11 -7 21 -23 23 -35z"
+                />
+              </g>
+            </svg>
+            <p>You don't have any notes yet!</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["notes"],
+  data() {
+    return {
+      title: "List of notes",
+      placeholderText: "Enter here your note :)",
+      inputValue: "",
+      hint: `This page loaded at: ${new Date().toLocaleString()}`,
+    };
+  },
+  methods: {
+    // v-bind:value="inputValue"
+    // v-on:input="updateInputValue"
+    // updateInputValue(e) {
+    //     this.inputValue = e.target.value;
+    // },
+    addNote() {
+      if (this.inputValue.trim().length !== 0) {
+        let createdDate = new Date().toLocaleString();
+        let idOfLastNote =
+          this.notes.length > 0 ? this.notes[this.notes.length - 1].id : 0; // fix the bug when last two notes have the same id
+        let newNote = {
+          id: idOfLastNote + 1,
+          text: this.inputValue.trim(),
+          createdDate,
+        };
+        // this.notes.push(newNote);
+        this.$emit("pushNote", newNote);
+      } else {
+        alert("Empty note! Please enter your note :)");
+      }
+      this.inputValue = "";
+    },
+    clearAllNotes() {
+      this.$emit("deleteAllNotes");
+    },
+    // toggleEditbar() {
+    //     this.editbar = !this.editbar;
+    //     console.log("Hi")
+    // }
+  },
+};
+</script>
+
+<style scoped>
+.container {
+  max-width: 600px;
+}
+.card {
+  padding: 20px 50px;
+}
+.btn-block {
+  text-align: center;
+  margin: 20px 0;
+}
+.line {
+  border: 1px solid #6c7daf;
+}
+/* ul {
+        border-top: 1px solid #6c7daf;
+        margin-top: 20px;
+        padding-top: 20px;
+    } */
+h1 {
+  font-weight: 900;
+  color: #7b8ab8;
+}
+
+.clear-btn,
+.edit-btn {
+  position: absolute;
+  right: 0;
+  border-radius: 5px;
+  background-color: #d9e3f1;
+  color: #7b8ab8;
+  font-size: 1.2rem;
+  text-align: center;
+  line-height: 24px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgb(55 94 148 / 20%),
+    -2px -2px 5px rgb(255 255 255 / 40%);
+}
+.edit-btn {
+  right: 35px;
+}
+.green {
+  color: green !important;
+}
+.red {
+  color: red !important;
+}
+.edit-input {
+  height: 24px;
+  background-color: #e4ebf5;
+  border: 1px solid grey;
+  position: absolute;
+  left: 0;
+  /* display: none; */
+}
+.hint-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* .hint-box img {
+            max-width: 200px;
+        } */
+.hint-box p {
+  color: #6c7daf;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.error {
+  margin: 0 auto;
+  text-align: center;
+  background-color: #dc143c;
+  color: #e4ebf5;
+  font-weight: 900;
+  width: 95%;
+  border-radius: 0 0 0.25rem 0.25rem;
+}
+</style>
